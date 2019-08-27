@@ -2,7 +2,7 @@ var target = Argument("target", "Pack");
 var configuration = Argument("configuration", "Release");
 var proj = $"./src/PayEx.Client/PayEx.Client.csproj";
 
-var version = "2.1.0"; 
+var version = "2.1.1"; 
 var outputDir = "./output";
 
 Task("Build")    
@@ -27,6 +27,7 @@ Task("Pack")
             OutputDirectory = outputDir,
         };
         coresettings.MSBuildSettings = new DotNetCoreMSBuildSettings()
+                                        .WithProperty("AssemblyOriginatorKeyFile", "PayEx.Client.snk")
                                         .WithProperty("Version", new[] { version });
 
         
