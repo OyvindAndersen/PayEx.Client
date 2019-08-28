@@ -5,5 +5,6 @@
         public static string Vipps = "Vipps";
         public static string Visa = "Visa";
         public static string MasterCard = "MasterCard";
+        public static string CreditCard = "CreditCard";
     }
 }
