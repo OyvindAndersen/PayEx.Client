@@ -12,10 +12,19 @@
         /// </summary>
         public string CancelUrl { get; set; }
 
-
         /// <summary>
         /// API callback endpoint. Called on Vipps app payment sequence finished.
         /// </summary>
         public string CallbackUrl { get; set; }
+
+        /// <summary>
+        /// Optional url to logo on the payment page
+        /// </summary>
+        public string LogoUrl { get; set; }
+
+        /// <summary>
+        /// Optional terms of service to be provided as a link on the payment page
+        /// </summary>
+        public string TermsOfServiceUrl { get; set; }
     }
 }
