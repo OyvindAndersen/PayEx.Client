@@ -1,5 +1,7 @@
 ﻿namespace PayEx.Client.Models.Vipps.TransactionAPI.Response
 {
+    using System;
+
     public class TransactionResponse
     {
         public string Id { get; set; }
@@ -11,5 +13,7 @@
         public string Description { get; set; }
         public string PayeeReference { get; set; }
         public string FailedReason { get; set; }
+        public DateTime Created { get; set; }
+        public DateTime Updated { get; set; }
     }
 }
