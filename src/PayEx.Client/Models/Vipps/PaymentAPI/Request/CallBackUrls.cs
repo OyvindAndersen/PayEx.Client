@@ -1,4 +1,6 @@
-﻿namespace PayEx.Client.Models.Vipps.PaymentAPI.Request
+﻿using System.Collections.Generic;
+
+namespace PayEx.Client.Models.Vipps.PaymentAPI.Request
 {
     public class CallBackUrls
     {
@@ -26,5 +28,7 @@
         /// Optional terms of service to be provided as a link on the payment page
         /// </summary>
         public string TermsOfServiceUrl { get; set; }
+
+        public List<string> HostUrls { get; set; }
     }
 }

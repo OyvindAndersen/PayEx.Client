@@ -13,6 +13,7 @@ namespace PayEx.Client.Models.Vipps.PaymentAPI.Request
             payment.Urls.CompleteUrl = options.StatusInUrl ? IncludeStatusInUrl(options.CompletePageUrl, "status=complete") : options.CompletePageUrl.ToString();
             payment.Urls.LogoUrl = options.LogoUrl?.ToString();
             payment.Urls.TermsOfServiceUrl = options.TermsOfServiceUrl?.ToString();
+            payment.Urls.HostUrls = options.HostUrls;
         }
 
         private static string IncludeStatusInUrl(Uri url, string additionalQueryParameters)

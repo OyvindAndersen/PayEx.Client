@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace PayEx.Client
 {
@@ -19,6 +20,7 @@ namespace PayEx.Client
         public Uri LogoUrl { get; set; }
         public Uri TermsOfServiceUrl { get; set; }
         public bool StatusInUrl { get; set; }
+        public List<string> HostUrls { get; set; }
 
         public bool IsEmpty()
         {
