@@ -72,6 +72,26 @@ namespace PayEx.Client
         }
 
         /// <summary>
+        /// Gets an existing payment.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<PaidResponseContainer> GetPaidPayment(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+                throw new CouldNotFindPaymentException(id);
+
+            var payment = await GetPayment(id);
+            var operation = payment.Operations.SingleOrDefault(o => o.Rel == "paid-payment");
+            if (operation == null)
+                throw new CouldNotFindPaidPaymentException(id);
+
+            Func<ProblemsContainer, Exception> onError = m => new CouldNotFindPaidPaymentException(id, m);
+            var res = await CreateInternalClient().HttpGet<PaidResponseContainer>(operation.Href, onError);
+            return res;
+        }
+
+        /// <summary>
         /// Gets all transactions for a payment.
         /// </summary>
         /// <param name="id"></param>
@@ -238,8 +258,8 @@ namespace PayEx.Client
         {
             var selector = _clientSelector.Select();
             var payExOptions = _optionFetcher.Get(selector);
-            
-            if(payExOptions == null)
+
+            if (payExOptions == null)
                 throw new UnknownAccountException($"Unknown payex account {selector}. Check config.");
 
             if (payExOptions.IsEmpty())

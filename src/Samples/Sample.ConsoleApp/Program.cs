@@ -7,6 +7,8 @@ using PayEx.Client.Models.Vipps.PaymentAPI.Request;
 
 namespace Sample.ConsoleApp
 {
+    using System.Linq;
+
     class Program
     {
         static void Main(string[] args)
@@ -14,13 +16,13 @@ namespace Sample.ConsoleApp
             var payExOptions = new PayExOptions
             {
                 
-                ApiBaseUrl = new Uri("https://api.externalintegration.payex.com/"),
-                Token = "my-token",
-                MerchantId = "my-merchantId",
-                MerchantName = "YOUR-MERCHANT-NAME",
-                CallBackUrl = new Uri("https://yourdomain.com/callbacks"),
-                CancelPageUrl = new Uri("https://yourdomain.com/cancel"),
-                CompletePageUrl = new Uri("https://yourdomain.com/complete")
+                ApiBaseUrl = new Uri("https://api.externalintegration.payex.com/psp/creditcard/payments/"),
+                Token = "c274f82a89b3853e8dfdd842996caa19268b6989a0ea130298ed02ecd6880c36",
+                MerchantId = "d3f5327c-d735-44fb-b8aa-7fb4170a36b6",
+                MerchantName = "Hurtigruten",
+                //CallBackUrl = new Uri("https://yourdomain.com/callbacks"),
+                //CancelPageUrl = new Uri("https://yourdomain.com/cancel"),
+                //CompletePageUrl = new Uri("https://yourdomain.com/complete")
             };
 
             IOptions<PayExOptions> options = new OptionsWrapper<PayExOptions>(payExOptions);
@@ -37,15 +39,19 @@ namespace Sample.ConsoleApp
             
             IOptionsSnapshot<PayExOptions> optionsSnap = new OptionsManager<PayExOptions>(new OptionsFactory<PayExOptions>(configureOptionses,postConfigureOptionses));
             var payExClient = new PayExClient(httpClientFactory, optionsSnap, clientSelector);
-            var prices = new Price
-            {
-                Amount = 10000,
-                VatAmount = 2500,
-                Type = PriceTypes.Vipps
-            };
-            var paymentRequest = new PaymentRequest("Console.Sample/1.0.0", "Some productname", "order123", "123456", prices);
-            var res = payExClient.PostVippsPayment(paymentRequest).GetAwaiter().GetResult();
-            Console.WriteLine($"Payment created with id : {res.Payment.Id}");
+
+            var id = "7a378390-c198-4ab2-cfbb-08d8378632ec";
+            var payment = payExClient.GetPayment(id).GetAwaiter().GetResult();
+            var paid = payExClient.GetPaidPayment(id).GetAwaiter().GetResult();
+            //var prices = new Price
+            //{
+            //    Amount = 10000,
+            //    VatAmount = 2500,
+            //    Type = PriceTypes.Vipps
+            //};
+            //var paymentRequest = new PaymentRequest("Console.Sample/1.0.0", "Some productname", "order123", "123456", prices);
+            //var res = payExClient.PostVippsPayment(paymentRequest).GetAwaiter().GetResult();
+            //Console.WriteLine($"Payment created with id : {res.Payment.Id}");
         }
 
         private static Action<PayExOptions> Conf(PayExOptions payExOptions)

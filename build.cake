@@ -2,7 +2,7 @@ var target = Argument("target", "Pack");
 var configuration = Argument("configuration", "Release");
 var proj = $"./src/PayEx.Client/PayEx.Client.csproj";
 
-var version = "2.3.1"; 
+var version = "2.4.0"; 
 var outputDir = "./output";
 
 Task("Build")    
